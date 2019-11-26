@@ -31,8 +31,9 @@ lat1 = lat_t1/1000000
 lon1 = lon_t1/1000000
 z1 = contour_df1['rssi'].values
 
-# chuyen tọa do
+# chuyen he tọa do cua ban do sang canvas:
 
+   # Ham tinh khoang cach giua 2 diem biet toa do:
 def distanceBetween2Points(la1, lo1, la2, lo2):
 	dLat = (la2 - la1) * (np.pi / 180)
 	dLon = (lo2 - lo1) * (np.pi / 180)
@@ -43,10 +44,12 @@ def distanceBetween2Points(la1, lo1, la2, lo2):
 	R = 6371000                                     #  R la bk trai dat
 	d = R * c
 	return d
+   # Chuyen tu bản do sang canvas dau vao kinh do, vi do; dau ra toa do x,y trn nen canvas
 def chuyenHe(la2, lo2):
 	# vi do, kinh do diem tranmister 
 	la1 = 21.005719
 	lo1 = 105.842480
+	
 	d1 = distanceBetween2Points(la2, lo2, la2, lo1)
 	d2 = distanceBetween2Points(la2, lo2, la1, lo2)
 	d1_pixel = (d1*160)/30
@@ -66,6 +69,7 @@ def chuyenHe(la2, lo2):
 		y = h/2 - d2_pixel
 	return x,y
 
+# Ham ve cac duong contour
 def drawContour(tg,value,color):
 	if(tg[0][2] == value):   # tg[0][2] là gia tri z cua dinh dau tien tam giac
 		M = tg[0][0:2]
@@ -101,11 +105,13 @@ def drawContour(tg,value,color):
 	if( P!=None and N!=None):
 		cas.create_line(P[0],P[1], N[0], N[1], fill = color, width = 1.5)
 
+# Ham ve tam giac
 def drawTg(tg):
 	cas.create_line(tg[0][0],tg[0][1],tg[1][0],tg[1][1])
 	cas.create_line(tg[1][0],tg[1][1],tg[2][0],tg[2][1])
 	cas.create_line(tg[2][0],tg[2][1],tg[0][0],tg[0][1])
 
+# Ham ve cac diem:
 def drawPoint(tg):
 	cas.create_oval(tg[0][0]-2,tg[0][1]-2,tg[0][0]+2,tg[0][1]+2, fill="green")
 	cas.create_oval(tg[1][0]-2,tg[1][1]-2,tg[1][0]+2,tg[1][1]+2, fill="green")
